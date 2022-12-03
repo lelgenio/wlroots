@@ -140,19 +140,6 @@ void wlr_output_render_software_cursors(struct wlr_output *output,
 }
 
 static void output_cursor_damage_whole(struct wlr_output_cursor *cursor) {
-	struct wlr_box box;
-	output_cursor_get_box(cursor, &box);
-
-	pixman_region32_t damage;
-	pixman_region32_init_rect(&damage, box.x, box.y, box.width, box.height);
-
-	struct wlr_output_event_damage event = {
-		.output = cursor->output,
-		.damage = &damage,
-	};
-	wlr_signal_emit_safe(&cursor->output->events.damage, &event);
-
-	pixman_region32_fini(&damage);
 }
 
 static void output_cursor_reset(struct wlr_output_cursor *cursor) {
